@@ -36,16 +36,17 @@ audit_data = '''
 '''
 
 # Parse the XML data
-root = ET.fromstring(xml_data)
+#root = ET.fromstring(xml_data)
 
 # Iterate through each 'person' element
-for person in root.findall('person'):
-    name = person.find('name').text
-    age = person.find('age').text
-    print(f"Name: {name}, Age: {age}")
+#for person in root.findall('person'):
+#    name = person.find('name').text
+#    age = person.find('age').text
+#    print(f"Name: {name}, Age: {age}")
 
 # Parse the XML stanza
 audit = ET.fromstring(audit_data)
+
 # Iterate through each AUDIT_RECORD element
 for audit_record in audit.findall('AUDIT_RECORD'):
     timestamp = audit_record.find('TIMESTAMP').text
@@ -54,5 +55,5 @@ for audit_record in audit.findall('AUDIT_RECORD'):
     hostname = audit_record.find('HOST').text
     IP_address = audit_record.find('IP').text
     command_class = audit_record.find('COMMAND_CLASS').text
-    sql_text = audit_record.find('SQL_TEXT').text
-
+    sqltext = audit_record.find('SQLTEXT').text
+    print(f"Timestamp: {timestamp}, Op: {op_name}, User: {user_info}, Host: {hostname}, IP: {IP_address}, Class: {command_class}, SQL: {sqltext}")
