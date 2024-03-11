@@ -2,20 +2,6 @@
 
 import xml.etree.ElementTree as ET
 
-# Sample XML data
-xml_data = '''
-<root>
-    <person>
-        <name>John</name>
-        <age>30</age>
-    </person>
-    <person>
-        <name>Alice</name>
-        <age>25</age>
-    </person>
-</root>
-'''
-
 audit_data = '''
 <AUDIT>
  <AUDIT_RECORD>
@@ -35,25 +21,31 @@ audit_data = '''
 </AUDIT>
 '''
 
-# Parse the XML data
-#root = ET.fromstring(xml_data)
-
-# Iterate through each 'person' element
-#for person in root.findall('person'):
-#    name = person.find('name').text
-#    age = person.find('age').text
-#    print(f"Name: {name}, Age: {age}")
-
 # Parse the XML stanza
 audit = ET.fromstring(audit_data)
 
 # Iterate through each AUDIT_RECORD element
 for audit_record in audit.findall('AUDIT_RECORD'):
     timestamp = audit_record.find('TIMESTAMP').text
+    record_id = audit_record.find('RECORD_ID').text
     op_name = audit_record.find('NAME').text
     user_info = audit_record.find('USER').text
     hostname = audit_record.find('HOST').text
     IP_address = audit_record.find('IP').text
     command_class = audit_record.find('COMMAND_CLASS').text
     sqltext = audit_record.find('SQLTEXT').text
-    print(f"Timestamp: {timestamp}, Op: {op_name}, User: {user_info}, Host: {hostname}, IP: {IP_address}, Class: {command_class}, SQL: {sqltext}")
+    # print(f"Timestamp: {timestamp}, Op: {op_name}, User: {user_info}, Host: {hostname}, IP: {IP_address}, Class: {command_class}, SQL: {sqltext}")
+
+    # Print syslog header
+    # Need to convert timestamp into RFC 5424
+    # TODO replace/convert timezone appropriately (need sample data to decide how)
+    # examples:
+    #    2019-01-18T11:07:53.520+07:00 
+    #    2019-01-18T11:07:53.520Z
+    print(f"<13>1 {timestamp} {hostname}",end=' ')
+    
+    # Print LEEF 2.0 header
+    print(f"2.0|BiSoft|mysqlaudit2leef|1.0|{record_id}|^|",end=' ')
+
+    # Print Event attributes
+    print(f"usrName={user_info}^sev=1^src={IP_address}^commClass={command_class}^sqlText={sqltext}")
