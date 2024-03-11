@@ -45,7 +45,7 @@ def printLEEFentry(audit_record_data):
     print(f"<13>1 {timestamp} {hostname}",end=' ')
     
     # Print LEEF 2.0 header
-    print(f"2.0|BiSoft|MySQL Auditing|1.0|{record_id}|^|",end=' ')
+    print(f"2.0|BiSoft|mysqlaudit2leef.py|1.0|{record_id}|^|",end=' ')
 
     # Print Event attributes
     print(f"usrName={user_info}^sev=1^src={IP_address}^auditName={op_name}^commClass={command_class}^sqlText={sqltext}")
