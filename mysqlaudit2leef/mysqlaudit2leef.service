@@ -1,5 +1,5 @@
 [Unit]
-Description=Service to Send MySQL Audit Log to Syslog in LEEF
+Description=Send MySQL Audit Log to Syslog in LEEF
 After=network.target
 
 [Service]
