@@ -3,3 +3,4 @@
 
 cat samplemysqlaudit.log | python3 mysqlaudit2leef.py
 
+#tail -f samplemysqlaudit.log | python3 mysqlaudit2leef.py | logger -p local2.info -t mysqlaudit
