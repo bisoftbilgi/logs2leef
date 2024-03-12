@@ -16,7 +16,7 @@ start_run() {
 }
 
 stop_run() {
-    LOGGERPID=$(ps -ef | grep "logger -p local2.info -t mysqlaudit" | grep -v "grep" | awk '{print $2}')
+#    LOGGERPID=$(ps -ef | grep "logger -p local2.info -t mysqlaudit" | grep -v "grep" | awk '{print $2}')
     CONVPID=$(ps -ef | grep "python3 mysqlaudit2leef.py" | grep -v "grep" | awk '{print $2}')
     TAILPID=$(ps -ef | grep "tail -f $AUDIT_LOGFILE" | grep -v "grep" | awk '{print $2}')
     kill $LOGGERPID
