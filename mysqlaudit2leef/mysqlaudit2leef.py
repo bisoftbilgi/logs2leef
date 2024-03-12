@@ -42,11 +42,6 @@ def printLEEFentry(audit_record_data):
         sqltext = 'N/A'
 
     # Print syslog header
-    # Need to convert timestamp into RFC 5424
-    # TODO replace/convert timezone appropriately (need sample data to decide how)
-    # examples:
-    #    2019-01-18T11:07:53.520+07:00 
-    #    2019-01-18T11:07:53.520Z
     formatted_timestamp = timestamp.replace(" UTC","Z")
     print(f"<13>1 {formatted_timestamp} {hostname}",end=' ')
     
