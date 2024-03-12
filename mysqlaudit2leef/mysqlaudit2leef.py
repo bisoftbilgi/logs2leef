@@ -1,6 +1,7 @@
 # Python script to convert MySQL Audit logs to LEEF format on the fly
 
 import xml.etree.ElementTree as ET
+import syslog
 
 
 def printLEEFentry(audit_record_data):
@@ -41,16 +42,18 @@ def printLEEFentry(audit_record_data):
     except AttributeError:
         sqltext = 'N/A'
 
-    # Print syslog header
+    # Prep syslog header
     formatted_timestamp = timestamp.replace(" UTC","Z")
-    print(f"<13>1 {formatted_timestamp} {hostname}",end=' ')
+    syslog_header = f"<13>1 {formatted_timestamp} {hostname} "
     
-    # Print LEEF 1.0 header
-    print(f"1.0|BiSoft|mysqlaudit2leef|1.0|{record_id}|",end='')
+    # Prep LEEF 1.0 header
+    leef_header = f"1.0|BiSoft|mysqlaudit2leef|1.0|{record_id}|"
 
-    # Print Event attributes
-    print(f"usrName={user_info}\tsev=1\tsrc={IP_address}\tauditName={op_name}\tcommClass={command_class}\tsqlText={sqltext}\t")
+    # Prep Event attributes
+    event_attr = f"usrName={user_info}\tsev=1\tsrc={IP_address}\tauditName={op_name}\tcommClass={command_class}\tsqlText={sqltext}\t"
 
+    # Send message to syslog
+    syslog.syslog( syslog_header + leef_header + event_attr )
 
 # Main mysqlaudit2leef.py 
 

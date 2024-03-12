@@ -12,7 +12,7 @@ print_usage () {
 
 start_run() {
     # Invoke python3 script and feed into syslog
-    tail -f $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger -p local2.info -t mysqlaudit &
+    tail -f $AUDIT_LOGFILE | python3 mysqlaudit2leef.py
 }
 
 stop_run() {
