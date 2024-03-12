@@ -48,7 +48,7 @@ def printLEEFentry(audit_record_data):
     print(f"2.0|BiSoft|mysqlaudit2leef.py|1.0|{record_id}|^|",end=' ')
 
     # Print Event attributes
-    print(f"usrName={user_info}^sev=1^src={IP_address}^auditName={op_name}^commClass={command_class}^sqlText={sqltext}")
+    print(f"usrName={user_info}^sev=1^src={IP_address}^auditName={op_name}^commClass={command_class}^sqlText={sqltext}^")
 
 
 # Main mysqlaudit2leef.py 
