@@ -42,7 +42,8 @@ def printLEEFentry(audit_record_data):
     # examples:
     #    2019-01-18T11:07:53.520+07:00 
     #    2019-01-18T11:07:53.520Z
-    print(f"<13>1 {timestamp} {hostname}",end=' ')
+    formatted_timestamp = timestamp.replace(" UTC","Z")
+    print(f"<13>1 {formatted_timestamp} {hostname}",end=' ')
     
     # Print LEEF 2.0 header
     print(f"2.0|BiSoft|mysqlaudit2leef.py|1.0|{record_id}|^|",end='')
