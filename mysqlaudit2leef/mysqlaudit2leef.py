@@ -54,43 +54,18 @@ def printLEEFentry(audit_record_data):
 # Main mysqlaudit2leef.py 
 
 while True:
-    # TODO: Read from input until matching "<AUDIT_RECORD>"
+    # Read from input until matching "<AUDIT_RECORD>"
     inputline = ''
     while "<AUDIT_RECORD>" not in inputline:
         inputline = input()
 
-    #print(f"Inputline: {inputline}")
-    #print(">>>>>> New Audit Record")
-    # TODO: Start initializing AUDIT_RECORD multiline text variable
+    # Start initializing AUDIT_RECORD multiline text variable
     audit_record_text = inputline
 
-    # TODO: Until matching "</AUDIT_RECORD>"
+    # Until matching "</AUDIT_RECORD>"
     while "</AUDIT_RECORD>" not in inputline:
         inputline = input()
-        #print(f"Inputlineinloop: {inputline}")
-        # TODO: Append every new line 
+        # Append every new line 
         audit_record_text = audit_record_text + inputline
-        #print(f"Auditrecordinloop: {audit_record_text}")
 
-    #print(audit_record_text)
     printLEEFentry(audit_record_text)
-    #print(">>>>>> End of Audit Record")
-
-
-audit_record_text = '''
- <AUDIT_RECORD>
-  <TIMESTAMP>2019-10-03T14:09:38 UTC</TIMESTAMP>
-  <RECORD_ID>6_2019-10-03T14:06:33</RECORD_ID>
-  <NAME>Query</NAME>
-  <CONNECTION_ID>5</CONNECTION_ID>
-  <STATUS>0</STATUS>
-  <STATUS_CODE>0</STATUS_CODE>
-  <USER>root[root] @ localhost [127.0.0.1]</USER>
-  <OS_LOGIN/>
-  <HOST>localhost</HOST>
-  <IP>127.0.0.1</IP>
-  <COMMAND_CLASS>drop_table</COMMAND_CLASS>
-  <SQLTEXT>DROP TABLE IF EXISTS t</SQLTEXT>
- </AUDIT_RECORD>
-'''
-
