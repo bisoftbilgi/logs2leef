@@ -36,9 +36,9 @@ if [ "$#" -ne 2 ]; then
 fi
 
 AUDIT_LOGFILE=$1
-COMM=$2
+OPR=$2
 
-case "$1" in
+case "$OPR" in
     'start')
             start_run
             ;;
