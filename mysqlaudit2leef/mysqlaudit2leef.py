@@ -9,7 +9,12 @@ def printLEEFentry(audit_record_data):
 
     # Parse AUDIT_RECORD element
     timestamp = audit_record.find('TIMESTAMP').text
-    record_id = audit_record.find('RECORD_ID').text
+
+    try:
+        record_id = audit_record.find('RECORD_ID').text
+    except AttributeError:
+        record_id = 'N/A'
+
     op_name = audit_record.find('NAME').text
     try:
         user_info = audit_record.find('USER').text
