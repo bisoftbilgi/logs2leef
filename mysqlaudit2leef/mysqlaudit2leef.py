@@ -46,11 +46,11 @@ def printLEEFentry(audit_record_data):
     formatted_timestamp = timestamp.replace(" UTC","Z")
     syslog_header = f"<13>1 {formatted_timestamp} {hostname} "
     
-    # Prep LEEF 1.0 header
-    leef_header = f"1.0|BiSoft|mysqlaudit2leef|1.0|{record_id}|"
+    # Prep LEEF 2.0 header
+    leef_header = f"2.0|BiSoft|mysqlaudit2leef|1.0|{record_id}|^|"
 
     # Prep Event attributes
-    event_attr = f"usrName={user_info}\tsev=1\tsrc={IP_address}\tauditName={op_name}\tcommClass={command_class}\tsqlText={sqltext}\t"
+    event_attr = f"usrName={user_info}^sev=1^src={IP_address}^auditName={op_name}^commClass={command_class}^sqlText={sqltext}^"
 
     # Send message to syslog
     syslog.syslog( syslog_header + leef_header + event_attr )

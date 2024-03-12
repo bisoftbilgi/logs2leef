@@ -1,5 +1,5 @@
 # logs2leef
-Set of scripts that converts different log formats to LEEF on the fly
+Set of scripts that converts different log formats to LEEF 2.0 on the fly
 
 Using reference
 
