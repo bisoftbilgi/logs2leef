@@ -10,4 +10,4 @@ Requirements:
 - MySQL audit log format is XML "NEW"
 
 Usage:
-`$ mysqlaudit2leef.sh <MySQL Audit Logfile> { start | stop }`
+`$ mysqlaudit2leef.sh <MySQL Audit Logfile> <Remote syslog address> { start | stop }`

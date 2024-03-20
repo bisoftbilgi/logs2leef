@@ -52,8 +52,9 @@ def printLEEFentry(audit_record_data):
     # Prep Event attributes
     event_attr = f"usrName={user_info}^sev=1^src={IP_address}^auditName={op_name}^commClass={command_class}^sqlText={sqltext}^"
 
-    # Send message to syslog
-    syslog.syslog( syslog_header + leef_header + event_attr )
+    # Print formatted logs to standard output
+    # (to be sent to networked syslog via logger command )
+    print( syslog_header + leef_header + event_attr )
 
 # Main mysqlaudit2leef.py 
 
