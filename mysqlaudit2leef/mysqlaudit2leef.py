@@ -1,8 +1,6 @@
 # Python script to convert MySQL Audit logs to LEEF format on the fly
 
 import xml.etree.ElementTree as ET
-import syslog
-
 
 def printLEEFentry(audit_record_data):
     # Parse the XML stanza
