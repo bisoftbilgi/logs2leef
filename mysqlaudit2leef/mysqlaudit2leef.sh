@@ -2,22 +2,29 @@
 # Script to convert MySQL Audit logs to LEEF format on the fly
 #
 # Usage:
-#     $ mysqlaudit2leef.sh <MySQL Audit Logfile> { start | stop }
+#     $ mysqlaudit2leef.sh <MySQL Audit Logfile> { <Remote syslog address> | local } { start | stop }
 #
 
 print_usage () {
-    echo "   USAGE: $0 <MySQL Audit Logfile> { start | stop }"
+    echo "   USAGE: $0 <MySQL Audit Logfile> { <Remote syslog address> | local } { start | stop }"
     echo
 }
 
 start_run() {
-    # Invoke python3 script and feed into syslog
-    tail -f $AUDIT_LOGFILE | python3 mysqlaudit2leef.py
+    if [ $SYSLOG_TARGET = 'local' ]; then
+        # Invoke python3 script and feed into local syslog
+        tail -f $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger -t mysqlaudit2leef
+    else
+        # Invoke python3 script and feed into remote syslog
+        tail -f $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger -n $SYSLOG_TARGET -t mysqlaudit2leef
+    fi
 }
 
 stop_run() {
+    LGRPID=$(ps -ef | grep "logger" | grep "-t mysqlaudit2leef" | grep -v "grep" | awk '{print $2}')
     CONVPID=$(ps -ef | grep "python3 mysqlaudit2leef.py" | grep -v "grep" | awk '{print $2}')
     TAILPID=$(ps -ef | grep "tail -f $AUDIT_LOGFILE" | grep -v "grep" | awk '{print $2}')
+    kill $LGRPID
     kill $CONVPID
     kill $TAILPID
 }
@@ -28,7 +35,7 @@ if [ "$1" == "--help" ]; then
     exit 0
 fi
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
     echo "   ERROR: Invalid number of arguments"
     echo
     print_usage
@@ -36,7 +43,8 @@ if [ "$#" -ne 2 ]; then
 fi
 
 AUDIT_LOGFILE=$1
-OPR=$2
+SYSLOG_TARGET=$2
+OPR=$3
 
 case "$OPR" in
     'start')
