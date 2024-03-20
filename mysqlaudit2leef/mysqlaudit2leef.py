@@ -48,7 +48,8 @@ def printLEEFentry(audit_record_data):
     leef_header = f"2.0|BiSoft|mysqlaudit2leef|1.0|{record_id}|^|"
 
     # Prep Event attributes
-    event_attr = f"usrName={user_info}^sev=1^src={IP_address}^auditName={op_name}^commClass={command_class}^sqlText={sqltext}^"
+    raw_event_attr = f"usrName={user_info}^sev=1^src={IP_address}^auditName={op_name}^commClass={command_class}^sqlText={sqltext}^"
+    event_attr = raw_event_attr.replace('\n',' ')
 
     # Print formatted logs to standard output
     # (to be sent to respective syslog via logger command )
