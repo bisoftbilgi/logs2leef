@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 WorkingDirectory=/opt/logs2leef/mysqlaudit2leef
-ExecStart=/opt/logs2leef/mysqlaudit2leef/mysqlaudit2leef.sh <MySQL Audit Logfile> <Remote syslog address> start
-ExecStop=/opt/logs2leef/mysqlaudit2leef/mysqlaudit2leef.sh <MySQL Audit Logfile> <Remote syslog address> stop
+ExecStart=/opt/logs2leef/mysqlaudit2leef/mysqlaudit2leef.sh <MySQL Audit Logfile> { <Remote syslog address> | local } start
+ExecStop=/opt/logs2leef/mysqlaudit2leef/mysqlaudit2leef.sh <MySQL Audit Logfile> { <Remote syslog address> | local } stop
 Restart=on-failure
 RestartSec=5s
 
