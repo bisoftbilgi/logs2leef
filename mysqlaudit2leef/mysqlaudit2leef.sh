@@ -13,10 +13,10 @@ print_usage () {
 start_run() {
     if [ $SYSLOG_TARGET = 'local' ]; then
         # Invoke python3 script and feed into local syslog
-        tail -f $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger -t mysqlaudit2leef
+        tail -f $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger -S 10000 -t mysqlaudit2leef
     else
         # Invoke python3 script and feed into remote syslog
-        tail -f $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger -n $SYSLOG_TARGET -t mysqlaudit2leef
+        tail -f $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger -S 10000 -n $SYSLOG_TARGET -t mysqlaudit2leef
     fi
 }
 
