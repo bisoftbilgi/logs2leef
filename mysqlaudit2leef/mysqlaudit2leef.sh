@@ -13,17 +13,17 @@ print_usage () {
 start_run() {
     if [ $SYSLOG_TARGET = 'local' ]; then
         # Invoke python3 script and feed into local syslog
-        tail --follow=name --retry $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger -S 10000 -t mysqlaudit2leef
+        tail --follow=name --retry $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger --size 10000 --tag mysqlaudit2leef
     else
         # Invoke python3 script and feed into remote syslog
-        tail --follow=name --retry $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger -S 10000 -n $SYSLOG_TARGET -t mysqlaudit2leef
+        tail --follow=name --retry $AUDIT_LOGFILE | python3 mysqlaudit2leef.py | logger --size 10000 --server $SYSLOG_TARGET --tag mysqlaudit2leef
     fi
 }
 
 stop_run() {
-    LGRPID=$(ps -ef | grep "logger" | grep '-t mysqlaudit2leef' | grep -v "grep" | awk '{print $2}')
-    CONVPID=$(ps -ef | grep "python3 mysqlaudit2leef.py" | grep -v "grep" | awk '{print $2}')
-    TAILPID=$(ps -ef | grep "tail -f $AUDIT_LOGFILE" | grep -v "grep" | awk '{print $2}')
+    LGRPID=$(ps -ef | grep "logger" | grep '--tag mysqlaudit2leef' | grep --invert-match "grep" | awk '{print $2}')
+    CONVPID=$(ps -ef | grep "python3 mysqlaudit2leef.py" | grep --invert-match "grep" | awk '{print $2}')
+    TAILPID=$(ps -ef | grep "tail --follow=name --retry $AUDIT_LOGFILE" | grep --invert-match "grep" | awk '{print $2}')
     kill $LGRPID
     kill $CONVPID
     kill $TAILPID
